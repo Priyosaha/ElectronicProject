@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Override
-    public UserDto create(UserDto userDto) {
+    public UserDto createUser(UserDto userDto) {
 
         String randomId = UUID.randomUUID().toString();
         userDto.setUserId(randomId);

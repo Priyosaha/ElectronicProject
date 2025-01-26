@@ -27,8 +27,8 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDto> updateUser(@Valid @PathVariable("userId") String userId,
-                                              @RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> updateUser( @PathVariable("userId") String userId,
+                                              @Valid @RequestBody UserDto userDto) {
 
         UserDto user = userService.updatedUser(userDto,userId);
         return new ResponseEntity<>(user, HttpStatus.OK);
@@ -40,7 +40,7 @@ public class UserController {
         ApiResponseMessage message
                 = ApiResponseMessage
                 .builder()
-                .message("user deleted successfully with userId {userId}")
+                .message("user deleted successfully")
                 .userId(userId)
                 .status(HttpStatus.OK).success(true).build();
 

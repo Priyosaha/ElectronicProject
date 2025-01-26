@@ -2,6 +2,7 @@ package com.electronic.store.services.impl;
 
 import com.electronic.store.dtos.UserDto;
 import com.electronic.store.entities.User;
+import com.electronic.store.exception.ResourceNotFoundException;
 import com.electronic.store.repositories.UserRepository;
 import com.electronic.store.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 @Service
@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updatedUser(UserDto userDto, String userId) {
-        User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("user not found !!"));
+        User user = userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("user not found with this userId !!",userId));
         user.setName(userDto.getName());
         user.setAbout(userDto.getAbout());
         user.setGender(userDto.getGender());
@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(String userId) {
 
-        User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("user not found !!"));
+        User user = userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("cannot delete as the userId doesn't exists",userId));
         userRepository.delete(user);
 
     }
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto getUserById(String userId) {
 
-        User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeException("user not found"));
+        User user = userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("cannot get as the userId doesn't exists", userId));
         return EntitytoUserDto(user);
 
     }
